@@ -1,0 +1,48 @@
+EXAMINATION MODULE
+
+    1. EXAM LIST 
+    
+        =====> NAME
+        =====> NOTE
+        =====> FIRST Semester 2024/2025
+
+
+
+    2. EXAM SCHEDULE
+    ===> Subject
+    ===> Date
+    ===> Start time
+    ===> End time
+    ===> Room Number
+    ===> Full Mark
+    ===> Passing Marks
+
+
+    Programs = Class
+
+
+COMMUNICATE 
+
+
+==> NOTICE BOARD 
+supose we want to send an email to a student and lecturer we can use notice board
+    =>TITLE
+    =>MESSAGE
+    =>NOTICE Date
+    =>PUBLISH ON
+    =>MESSAGE TO
+        =>STUDENT 
+        =>LECTURER
+
+==>SEND EMAIL 
+    =>TITLE
+    =>MESSAGE
+    =>Specific User
+
+    =>All User
+        =>STUDENT
+        =>LECTURER
+
+    
+
+

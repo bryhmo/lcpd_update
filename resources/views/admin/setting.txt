@@ -1,0 +1,18 @@
+
+
+$paypalId = $this->paypalId;
+$query = array();
+$query['business'] = $paypalId;
+$query['cmd'] = '_xclick';
+$query['item_name'] = "";
+$query['no_shipping'] = '1';
+$query['item_number'] = Auth::user()->id;
+$query['amount'] = $amount;
+$query[currency_code'] = 'usd';
+$query['cancel_return'] = url('paypal/payment-error');
+$query['return] = url('paypal/payment-success');
+$query_string = http_build_query($query);
+
+header('Location:https://www.paypal.com/cga-bin/webscr?',$query_string);
+//header('Location:https:https://www.sandbox.paypal.com/cgi-bin/webscr?'.$query_string);
+exit();
