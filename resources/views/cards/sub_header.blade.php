@@ -46,21 +46,19 @@
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="active" href="/">Home</a></li>
-         
-          
-          <!-- <li><a href="events.html">Events</a></li> -->
-          
 
-           
-        
+
+          <!-- <li><a href="events.html">Events</a></li> -->
+
+
+
+
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      
-      <a href="{{route('register')}}" class="get-started-btn" title="Enroll now and start learning">Login Now</a>
-      <a href="{{url('/')}}" class="get-started-btn" title="Enroll now and start learning">Home</a>
 
-      
+      <a href="{{route('apply')}}" class="get-started-btn" title="Enroll now and start learning">Register Now</a>
+
     </div>
   </header><!-- End Header -->
 
@@ -72,7 +70,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
- 
+
 
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

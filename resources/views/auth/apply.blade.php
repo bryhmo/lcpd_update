@@ -1,105 +1,351 @@
-
-
-@extends('cards.sub_header')
-
-
-@section('content')
-    
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>lcpd.com</title>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('adminlin/plugins/fontawesome-free/css/all.min.css')}}">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="{{asset('adminlin/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('adminlin/dist/css/adminlte.min.css')}}">
-  <style>
-    .boll{
-      border:5px solid hsla(0, 100%, 50%,0.3);
-    }
-    h1{
-      color:red;
-      font-size: 20px;
-      text-align: center;
-    }
-    #countdown{
-      color: red;
-      font-family: Arial, Helvetica, sans-serif;
-      border: 3px solid rgba(222, 184, 135, 0.193);
-      background-color:transparent;
-      padding:15px;
-     
-      font-size: 70px;
-    }
-    p{
-      color: blue;
-      font-size: 10px;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master's Degree Registration</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="hold-transition login-page">
-<div class="login-box boll">
-  
-  
-<h1>The Registration Page will be here!</h1>
+<body>
 
-  <h1>Website Under Development!</h1>
+    <style>
 
-  <p>We're working hard to bring you an amazing website. <br><span style="font-size:30px">It will be ready by:</span></p>
-  
-  <div id="countdown"></div>
-  
-  <script>
-  // Set the date for when the website will be ready (today's date plus 1 month)
-  var endDate = new Date();
-  endDate.setMonth(endDate.getMonth() + 1);
-  
-  // Update the countdown every second
-  var countdownInterval = setInterval(updateCountdown, 1000);
-  
-  function updateCountdown() {
-    var now = new Date().getTime();
-    var distance = endDate - now;
-  
-    // Calculate days, hours, minutes, and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  
-    // Display the countdown
-    document.getElementById("countdown").innerHTML = days + "d :" + hours + "h "
-    + minutes + "m " + seconds + "s ";
-  
-    // If the countdown is over, display a message
-    if (distance < 0) {
-      clearInterval(countdownInterval);
-      document.getElementById("countdown").innerHTML = "Website is ready!";
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #eae7e7;
+    color: white;
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    margin-left: 20px;
+}
+
+nav {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color:white;
+    background-color:red;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+ background-color: rgb(226, 89, 89);
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 0px #000;
+    margin-top: 50px;
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form fieldset {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+form legend {
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px;
+    background-color: #ff0808;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #f56666;
+}
+
+button.next, button.previous {
+    display: inline-block;
+    width: 48%;
+    margin-top: 10px;
+}
+
+button.previous {
+    background-color: #ea6f11;
+}
+
+button.previous:hover {
+    background-color: #732e2e;
+}
+
+.form-section {
+    display: none;
+}
+
+.form-section.active {
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        margin: auto;
     }
-  }
-  </script>
 
+    button.next, button.previous {
+        width: 100%;
+        margin-top: 10px;
+    }
 
-</div>
-<!-- /.login-box -->
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-<!-- jQuery -->
-<script src="{{asset('adminlin/plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('adminlin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('adminlin/dist/js/adminlte.min.js')}}"></script>
+    nav {
+        margin-left: 0;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+}
+
+    </style>
+    <header>
+        <div class="logo">
+            <img src="{{asset('assets/img/lcpd.png')}}" alt="Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{route('register')}}">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Master's Degree Registration Form</h2>
+        <form id="registrationForm">
+            <!-- Personal Information -->
+            <div class="form-section" id="section1">
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required>
+
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required>
+
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" required>
+
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+
+                    <label for="nationality">Nationality:</label>
+                    <input type="text" id="nationality" name="nationality" required>
+
+                    <button type="button" class="next">Next</button>
+                </fieldset>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="form-section" id="section2">
+                <fieldset>
+                    <legend>Contact Information</legend>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" required></textarea>
+
+                    <legend>Next of Kin Information</legend>
+                    <label for="kinName">Next of Kin Name:</label>
+                    <input type="text" id="kinName" name="kinName" required>
+
+                    <label for="kinRelationship">Relationship:</label>
+                    <input type="text" id="kinRelationship" name="kinRelationship" required>
+
+                    <label for="kinPhone">Next of Kin Phone Number:</label>
+                    <input type="tel" id="kinPhone" name="kinPhone" required>
+
+                    <label for="kinAddress">Next of Kin Address:</label>
+                    <textarea id="kinAddress" name="kinAddress" required></textarea>
+
+                    <button type="button" class="previous">Previous</button>
+                    <button type="button" class="next">Next</button>
+                </fieldset>
+            </div>
+
+            <!-- Academic Background -->
+            <div class="form-section" id="section3">
+                <fieldset>
+                    <legend>Academic Background</legend>
+                    <label for="undergradDegree">Undergraduate Degree:</label>
+                    <input type="text" id="undergradDegree" name="undergradDegree" required>
+
+                    <label for="university">University/College:</label>
+                    <input type="text" id="university" name="university" required>
+
+                    <label for="gradYear">Year of Graduation:</label>
+                    <input type="number" id="gradYear" name="gradYear" min="1900" max="2100" step="1" required>
+
+                    <label for="gpa">GPA:</label>
+                    <input type="number" step="0.01" min="0.5" max="7.0" value="0.5" id="gpa" name="gpa" required>
+
+                    <label for="experience">Work Experience (if any):</label>
+                    <textarea id="experience" name="experience"></textarea>
+
+                    <label for="certificate">Upload Certificate:</label>
+                    <input type="file" id="certificate" name="certificate" required>
+
+                    <button type="button" class="previous">Previous</button>
+                    <button type="button" class="next">Next</button>
+                </fieldset>
+            </div>
+
+            <!-- Program Selection -->
+            <div class="form-section" id="section4">
+                <fieldset>
+                    <legend>Program Selection</legend>
+                    <label for="program">Select Program:</label>
+                    <select id="program" name="program" required>
+                        <option value="">Select</option>
+                        <option value="computerScience">Computer Science</option>
+                        <option value="businessAdministration">Business Administration</option>
+                        <option value="engineering">Engineering</option>
+                        <!-- Add more options as needed -->
+                    </select>
+
+                    <label for="intake">Preferred Intake:</label>
+                    <select id="intake" name="intake" required>
+                        <option value="">Select</option>
+                        <option value="march">March</option>
+                        <option value="july">July</option>
+                        <option value="september">September</option>
+                    </select>
+
+                    <label for="statement">Statement of Purpose:</label>
+                    <textarea id="statement" name="statement" required></textarea>
+
+                    <button type="button" class="previous">Previous</button>
+                    <button type="submit">Register</button>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    let currentSectionIndex = 0;
+    const sections = document.querySelectorAll('.form-section');
+    sections[currentSectionIndex].classList.add('active');
+
+    document.querySelectorAll('button.next').forEach(button => {
+        button.addEventListener('click', () => {
+            if (validateSection(sections[currentSectionIndex])) {
+                sections[currentSectionIndex].classList.remove('active');
+                currentSectionIndex++;
+                sections[currentSectionIndex].classList.add('active');
+            }
+        });
+    });
+
+    document.querySelectorAll('button.previous').forEach(button => {
+        button.addEventListener('click', () => {
+            sections[currentSectionIndex].classList.remove('active');
+            currentSectionIndex--;
+            sections[currentSectionIndex].classList.add('active');
+        });
+    });
+
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        if (!validateSection(sections[currentSectionIndex])) {
+            event.preventDefault();
+        } else {
+            alert('Registration successful!');
+        }
+    });
+
+    function validateSection(section) {
+        let isValid = true;
+        section.querySelectorAll('input, select, textarea').forEach(input => {
+            if (!input.checkValidity()) {
+                isValid = false;
+                input.style.borderColor = 'red';
+            } else {
+                input.style.borderColor = '';
+            }
+        });
+        return isValid;
+    }
+});
+
+    </script>
 </body>
 </html>
-
-@endsection

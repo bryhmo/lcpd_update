@@ -4,13 +4,13 @@
     <li class="nav-item">
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
-   
+
   </ul>
 
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Navbar Search -->
-    
+
 
     <!-- Messages Dropdown Menu -->
     <li class="nav-item dropdown">
@@ -129,7 +129,7 @@
       </div>
     </div>
 
-  
+
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -169,6 +169,32 @@
             </p>
           </a>
         </li>
+
+
+
+        <li class="nav-item  @if(Request::segment(2)=='users' || Request::segment(2)=='subject'|| Request::segment(2)=='assign_subject' || Request::segment(2)=='assign_class_lecturer' || Request::segment(2)=='class_timetable')  menu-is-opening menu-open @endif">
+          <a href="#" class="nav-link   @if(Request::segment(2)=='users' || Request::segment(2)=='subject'|| Request::segment(2)=='assign_subject' || Request::segment(2)=='assign_class_lecturer' || Request::segment(2)=='class_timetable') active @endif">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+              Registered Student
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{url('admin/users')}}" class="nav-link  @if(Request::segment(2)=='users') active @endif ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>New Applicant</p>
+              </a>
+            </li>
+
+
+          </ul>
+        </li>
+
+
+
+
         <li class="nav-item  @if(Request::segment(2)=='class' || Request::segment(2)=='subject'|| Request::segment(2)=='assign_subject' || Request::segment(2)=='assign_class_lecturer' || Request::segment(2)=='class_timetable')  menu-is-opening menu-open @endif">
           <a href="#" class="nav-link   @if(Request::segment(2)=='class' || Request::segment(2)=='subject'|| Request::segment(2)=='assign_subject' || Request::segment(2)=='assign_class_lecturer' || Request::segment(2)=='class_timetable') active @endif">
             <i class="nav-icon fas fa-table"></i>
@@ -210,6 +236,9 @@
             </li>
           </ul>
         </li>
+
+
+
         <li class="nav-item  @if(Request::segment(2)=='fees_collection')  menu-is-opening menu-open @endif">
           <a href="#" class="nav-link   @if(Request::segment(2)=='fees_collection' ) active @endif">
             <i class="nav-icon fas fa-table"></i>
@@ -314,7 +343,7 @@
               </p>
             </a>
           </li>
-         
+
           <li class="nav-item">
             <a href="{{url('lecturer/my_student')}}" class="nav-link @if(Request::segment(2)=='my_student') active @endif">
               <i class="nav-icon far fa-user"></i>
@@ -389,7 +418,7 @@
               </p>
             </a>
           </li>
-        
+
         @elseif(Auth::user()->user_type==3)
           <li class="nav-item">
             <a href="{{url('student/dashboard')}}" class="nav-link @if(Request::segment(2)=='dashboard') active @endif">
@@ -481,7 +510,7 @@
               </p>
             </a>
           </li>
-        @endif   
+        @endif
         <li class="nav-item">
           <a href="{{url('logout')}}" class="nav-link">
             <i class="nav-icon far fa-user"></i>
