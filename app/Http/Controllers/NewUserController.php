@@ -9,7 +9,7 @@ class NewUserController extends Controller
 {
     public function index()
     {
-        $users = NewUser::all();
+        $users = NewUser::paginate(15);
         return view('admin.newuser.index', compact('users'));
     }
 
