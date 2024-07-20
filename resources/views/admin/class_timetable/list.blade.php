@@ -1,8 +1,8 @@
- 
+
 @extends('layouts.app')
 
 @section('content')
-    
+
 
 
 <div class="content-wrapper">
@@ -33,15 +33,14 @@
                <form method="get" action="">
                 <div class="card-body">
                  @csrf
-                
-                  
+
                   <div class="row">
                     <div class="form-group col-md-3">
                       <label>Program Name</label>
                       <select class="form-control getClass" name="class_id" required>
                         <option value="">select</option>
                         @foreach ($getClass as $class)
-                          <option {{ (Request::get('class_id') == $class->id) ? 'selected':'' }} value="{{ $class->id}}">{{ $class->name }}</option> 
+                          <option {{ (Request::get('class_id') == $class->id) ? 'selected':'' }} value="{{ $class->id}}">{{ $class->name }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -51,13 +50,13 @@
                         <option value="">select</option>
                         @if (!empty($getSubject))
                           @foreach ($getSubject as $subject)
-                            <option {{ (Request::get('subject_id') == $subject->subject_id) ? 'selected':'' }} value="{{ $subject->subject_id}}">{{ $subject->subject_name }}</option> 
+                            <option {{ (Request::get('subject_id') == $subject->subject_id) ? 'selected':'' }} value="{{ $subject->subject_id}}">{{ $subject->subject_name }}</option>
                           @endforeach
 
                         @endif
                       </select>
                     </div>
-                    
+
                     <div class="form-group col-md-3">
                       <button type="submit" class="btn btn-primary" style="margin-top: 33px">Search</button>
                       <a href="{{url('admin/class_timetable/list')}}" class="btn btn-primary" style="margin-top: 33px">Reset</a>
@@ -74,7 +73,7 @@
               <input type="hidden" name="subject_id" value="{{ Request::get('subject_id') }}">
               <input type="hidden" name="class_id"   value="{{ Request::get('class_id') }}">
 
-          
+
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">Program Timetable</h3>
@@ -90,7 +89,7 @@
                         <td>Room Number</td>
                       </tr>
                     </thead>
-                    
+
                     <tbody>
                       @php
                       $i = 1;
@@ -105,7 +104,7 @@
                             <input type="time" name="timetable[{{$i}}][start_time]" value="{{ $value['start_time']}}" class="form-control">
                           </td>
                           <td>
-                            <input type="time" name="timetable[ {{$i}}][end_time]" value="{{ $value['end_time']}}" class="form-control">
+                            <input type="time" name="timetable[{{$i}}][end_time]" value="{{ $value['end_time']}}" class="form-control">
                           </td>
                           <td>
                             <input type="text"  name="timetable[{{$i}}][room_number]"  value="{{ $value['room_number'] }}" class="form-control">
@@ -115,9 +114,9 @@
                         @php
                         $i++;
                         @endphp
-                          
+
                       @endforeach
-                    
+
                     </tbody>
                   </table>
                   <div style="text-align: right;padding:20px">
@@ -125,14 +124,14 @@
                     <button class="btn btn-primary">submit</button>
 
                   </div>
-                  
+
                 </div>
-          
+
               <!-- /.card-body -->
             </div>
           </form>
         @endif
-          
+
           <!-- /.card -->
         </div>
       </div>
@@ -162,9 +161,9 @@
           $('.getSubject').html(response.html);
         },
       });
-      
+
     });
 
  </script>
-    
+
 @endsection

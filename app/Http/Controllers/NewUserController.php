@@ -102,7 +102,7 @@ class NewUserController extends Controller
 
         $user->save();
 
-        return redirect()->route('newuser.index')->with('success', 'User updated successfully');
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
     public function toggleAdmission($id)
@@ -111,7 +111,7 @@ class NewUserController extends Controller
         $user->admitted = !$user->admitted;
         $user->save();
 
-        return redirect()->route('newuser.index')->with('success', 'User admission status updated');
+        return redirect()->route('users.index')->with('success', 'User admission status updated');
     }
 
     public function destroy($id)
@@ -119,6 +119,6 @@ class NewUserController extends Controller
         $user = NewUser::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('newuser.index')->with('success', 'User deleted successfully');
+        return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
 }

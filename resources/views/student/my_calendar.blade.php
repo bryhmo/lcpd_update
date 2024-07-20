@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    
+
 <div class="content-wrapper">
   <section class="content-header">
     <div class="container-fluid">
@@ -18,7 +18,7 @@
         <div class="col-sm-6">
           <h1>My Calendar</h1>
         </div>
-       
+
       </div>
     </div>
   </section>
@@ -47,7 +47,7 @@
           events.push({
               title: '{{ $value['name'] }}',
               daysOfWeek: [ {{ $week['fullcalendar_day'] }} ],
-              startTime: '{{ isset($week['start_time']) ? $week['start_time'] : '' }}', 
+              startTime: '{{ isset($week['start_time']) ? $week['start_time'] : '' }}',
               endTime: '{{ isset($week['end_time']) ? $week['end_time'] : '' }}',
           });
       @endforeach

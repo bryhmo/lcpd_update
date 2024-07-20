@@ -1,8 +1,8 @@
- 
+
 @extends('layouts.app')
 
 @section('content')
-    
+
 
 
 <div class="content-wrapper">
@@ -14,7 +14,7 @@
           <h1 style="color: red">My Timetable({{$getClass->name}} - {{$getSubject->name}}) </h1>
         </div>
 
-        
+
 
       </div>
     </div><!-- /.container-fluid -->
@@ -24,13 +24,13 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          
+
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title" style="text-transform:uppercase">
                     {{$getClass->name}} - {{$getSubject->name}}
                   </h3>
-                </div> 
+                </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
                   <table class="table table-striped">
@@ -48,17 +48,17 @@
                         <td>{{  $valueW['week_name'] }}</td>
                         <td>{{  !empty($valueW['start_time'])? date('h:i:A',strtotime($valueW['start_time'])):'' }}</td>
                         <td>{{  !empty($valueW['end_time'])? date('h:i:A',strtotime($valueW['end_time'])):'' }}</td>
-                        {{-- <td>{{  $valueW['room_number'] }}</td> --}}
-                      </tr>  
+                        <td>{{  $valueW['room_number'] }}</td>
+                      </tr>
                       @endforeach
                     </tbody>
                   </table>
                 </div>
-          
+
               <!-- /.card-body -->
             </div>
-       
-          
+
+
           <!-- /.card -->
         </div>
       </div>

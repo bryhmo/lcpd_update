@@ -57,9 +57,9 @@ class ClassTimetableController extends Controller
             $week[] = $dataW;
 
         }
-        
-        
-        
+
+
+
         $data['week'] = $week;
 
         $data['header_title'] = "Class Timetable";
@@ -80,7 +80,7 @@ class ClassTimetableController extends Controller
 
        $json['html'] = $html;
        echo json_encode($json);
-       
+
     }
 
     public function insert_update(Request $request)
@@ -129,15 +129,15 @@ class ClassTimetableController extends Controller
                 $ClassSubject =  ClassSubjectTimetableModel::getRecordClassSubject($value->class_id, $value->subject_id, $valueW->id);
                 if(!empty($ClassSubject))
                 {
-                     $dataw['start_time'] = $ClassSubject->start_time;
-                     $dataw['end_time'] = $ClassSubject->end_time;
-                     $dataw['room_number'] = $ClassSubject->room_number;
+                     $dataW['start_time'] = $ClassSubject->start_time;
+                     $dataW['end_time'] = $ClassSubject->end_time;
+                     $dataW['room_number'] = $ClassSubject->room_number;
                 }
                 else
                 {
-                    $dataw['start_time'] = '';
-                    $dataw['end_time'] = '';
-                    $dataw['room_number'] = '';
+                    $dataW['start_time'] = '';
+                    $dataW['end_time'] = '';
+                    $dataW['room_number'] = '';
 
                 }
 
@@ -156,7 +156,7 @@ class ClassTimetableController extends Controller
     }
 
 
-    //Lecturers Side 
+    //Lecturers Side
     public function MyTimetableLecturer($class_id,$subject_id)
     {
         $data['getClass'] = ClassModel::getSingle($class_id);
@@ -172,22 +172,22 @@ class ClassTimetableController extends Controller
             $ClassSubject =  ClassSubjectTimetableModel::getRecordClassSubject($class_id, $subject_id, $valueW->id);
             if(!empty($ClassSubject))
             {
-                    $dataw['start_time'] = $ClassSubject->start_time;
-                    $dataw['end_time'] = $ClassSubject->end_time;
-                    $dataw['room_number'] = $ClassSubject->room_number;
+                    $dataW['start_time'] = $ClassSubject->start_time;
+                    $dataW['end_time'] = $ClassSubject->end_time;
+                    $dataW['room_number'] = $ClassSubject->room_number;
             }
             else
             {
-                $dataw['start_time'] = '';
-                $dataw['end_time'] = '';
-                $dataw['room_number'] = '';
+                $dataW['start_time'] = '';
+                $dataW['end_time'] = '';
+                $dataW['room_number'] = '';
 
             }
 
             $result[] = $dataW;
         }
-        
-    
+
+
 
         // dd($result);
         $data['getRecord'] = $result;

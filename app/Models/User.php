@@ -62,7 +62,7 @@ class User extends Authenticatable
     static public function getPaidAmount($student_id,$class_id){
        return StudentAddFeesModel::getPaidAmount($student_id,$class_id);
     }
-   
+
     static public function getEmailSingle($email)
     {
         // return self::where('email','=',$email);
@@ -91,7 +91,7 @@ class User extends Authenticatable
                     {
                         $return = $return->whereDate('created_at', '=', Request::get('date'));
                     }
-    
+
    $return =    $return->orderBy('id','desc')
                     ->paginate(20);
     return $return;
@@ -209,7 +209,7 @@ class User extends Authenticatable
                     ->where('users.id' ,'=',$id)
                     ->first();
    }
-   
+
 
    public function getProfile()
    {
@@ -253,17 +253,17 @@ class User extends Authenticatable
                     {
                         $return = $return->where('users.email','like','%'.Request::get('email').'%');
                     }
-                    
+
                     if(!empty(Request::get('gender')))
                     {
                         $return = $return->where('users.gender','like','%'.Request::get('gender').'%');
                     }
-                
+
                     if(!empty(Request::get('mobile_number')))
                     {
                         $return = $return->where('users.mobile_number','like','%'.Request::get('mobile_number').'%');
                     }
-                    
+
 
                     if(!empty(Request::get('marital_status')))
                     {
@@ -285,15 +285,15 @@ class User extends Authenticatable
                     {
                         $return = $return->whereDate('users.created_at','=',Request::get('date'));
                     }
-                     
-                    
+
+
                     if(!empty(Request::get('status')))
                     {
                         $status = (Request::get('status') == 100)? 0 : 1;
                         $return = $return->where('users.status','=',$status);
                     }
 
-                             
+
         $return = $return->orderBy('users.id','desc')
                             ->paginate(20);
             return $return;
@@ -314,7 +314,16 @@ class User extends Authenticatable
                    ->count();
    return $return;
   }
- 
+
+
+  static public function getStudentClass($class_id){
+        return self::select('users.id','users.name','users.last_name')
+            ->where('users.user_type','=',3)
+            ->where('users.is_delete','=',0)
+            ->where('users.class_id','=',$class_id)
+            ->orderBy('users.id','desc')
+            ->get();
+  }
 
   static public function getLecturerStudent($lecturer_id)
    {
@@ -331,7 +340,7 @@ class User extends Authenticatable
                     ->paginate(30);
     return $return;
    }
- 
+
   static public function getLecturerClass()
   {
        $return = self::select('users.*')
@@ -342,5 +351,7 @@ class User extends Authenticatable
            return $return;
  }
 
-  
+
+
+
 }

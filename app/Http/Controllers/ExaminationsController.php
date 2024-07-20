@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\ClassModel;
-use App\Models\ClassSubjectModel;
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\ExamModel;
+use App\Models\ClassModel;
+use Illuminate\Http\Request;
+use App\Models\ClassSubjectModel;
 use App\Models\ExamScheduleModel;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AssignClassLecturerModel;
 
@@ -50,10 +51,10 @@ class ExaminationsController extends Controller
         {
             abort(404);
         }
-       
+
     }
 
-    public function exam_update($id,Request $request) 
+    public function exam_update($id,Request $request)
     {
         $exam = ExamModel::getSingle($id);
         $exam->name = trim($request->name);
@@ -78,7 +79,7 @@ class ExaminationsController extends Controller
             {
                 abort(404);
             }
-           
+
     }
 
     public function exam_schedule(Request $request)
@@ -158,17 +159,41 @@ class ExaminationsController extends Controller
                     $exam->full_marks = $schedule['full_marks'];
                     $exam->passing_marks= $schedule['passing_marks'];
                     $exam->created_by = Auth::user()->id;
-                    $exam->save(); 
+                    $exam->save();
                 }
-         
+
             }
         }
         return redirect()->back()->with('success','Exam Schedule Successfully Saved');
     }
 
-    /*** 
+
+    public function marks_register(Request $request){
+        $data['getClass'] = ClassModel::getClass();
+        $data['getExam'] = ExamModel::getExam();
+
+        if(!empty($request->get('exam_id')) && !empty($request->get('class_id')))
+        {
+            $data['getSubject'] = ExamScheduleModel::getSubject($request->get('exam_id'),$request->get('class_id'));
+            $data['getStudent'] = User::getStudentClass($request->get('class_id'));
+            // dd($data['getStudentClass']);
+        }
+        $data['header_title'] = 'Marks Register';
+        return view('admin.examinations.marks_register',$data);
+    }
+
+    public function submit_marks_register(Request $request){
+        dd($request->all());
+    }
+
+
+
+
+
+
+    /***
     STUDENT SIDE OF THE EXAMINATIONATION TIMETABLE
-    
+
     */
 
     public function MyExamTimetable(Request $request)
@@ -239,7 +264,7 @@ class ExaminationsController extends Controller
                     $dataS['full_marks'] = $valueS->full_marks;
                     $dataS['passing_marks'] = $valueS->passing_marks;
                     $dataS['subject_unit'] = $valueS->subject_unit;
-    
+
                     $subjectArray[] = $dataS;
                 }
                 $dataE['subject'] = $subjectArray;
@@ -247,7 +272,7 @@ class ExaminationsController extends Controller
             }
             $dataC['exam'] = $examArray;
 
-            
+
 
 
             $result[] = $dataC;

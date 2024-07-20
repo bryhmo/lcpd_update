@@ -18,13 +18,13 @@ class CalendarController extends Controller
     {
         //timetable
 
-        $result = array();
+        $result = [];
         $getRecord = ClassSubjectModel::MySubject(Auth::user()->class_id);
         foreach($getRecord as $value)
         {
             $dataS['name'] = $value->subject_name;
             $getweek = WeekModel::getRecord();
-            $week = array();
+            $week = [];
             foreach($getweek as $valueW)
             {
                 $dataW = array();
@@ -34,9 +34,9 @@ class CalendarController extends Controller
                 $ClassSubject =  ClassSubjectTimetableModel::getRecordClassSubject($value->class_id, $value->subject_id, $valueW->id);
                 if(!empty($ClassSubject))
                 {
-                     $dataw['start_time'] = $ClassSubject->start_time;
-                     $dataw['end_time'] = $ClassSubject->end_time;
-                     $dataw['room_number'] = $ClassSubject->room_number;
+                     $dataW['start_time'] = $ClassSubject->start_time;
+                     $dataW['end_time'] = $ClassSubject->end_time;
+                     $dataW['room_number'] = $ClassSubject->room_number;
                      $week[] = $dataW;
                 }
             }
@@ -54,9 +54,9 @@ class CalendarController extends Controller
         return view('student.my_calendar')->with([
             'result' => $this->getTimetable(Auth::user()->class_id),
             'getExamTimetable' => $this->getExamTimetable(Auth::user()->class_id)
-            
+
         ]);
-       
+
 
 
     }
@@ -113,9 +113,9 @@ class CalendarController extends Controller
                 $ClassSubject =  ClassSubjectTimetableModel::getRecordClassSubject($value->class_id, $value->subject_id, $valueW->id);
                 if(!empty($ClassSubject))
                 {
-                     $dataw['start_time'] = $ClassSubject->start_time;
-                     $dataw['end_time'] = $ClassSubject->end_time;
-                     $dataw['room_number'] = $ClassSubject->room_number;
+                     $dataW['start_time'] = $ClassSubject->start_time;
+                     $dataW['end_time'] = $ClassSubject->end_time;
+                     $dataW['room_number'] = $ClassSubject->room_number;
                      $week[] = $dataW;
                 }
             }
@@ -124,8 +124,8 @@ class CalendarController extends Controller
         }
         return $result;
     }
-   
-    
+
+
     public function MyCalendarLecturer()
     {
         // die;

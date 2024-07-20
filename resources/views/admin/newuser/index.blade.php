@@ -125,3 +125,7 @@
 </div>
 
 @endsection
+
+@section('script')
+    <script src="{{asset('js/scripts.js')}}"></script>
+@endsection
