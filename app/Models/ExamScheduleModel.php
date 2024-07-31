@@ -11,6 +11,12 @@ class ExamScheduleModel extends Model
 
     protected $table = 'exam_schedule';
 
+
+    static public function getSingle($id)
+    {
+        return self::find($id);
+    }
+
     static public function getRecordSingle($exam_id,$class_id,$subject_id)
     {
         return ExamScheduleModel::where('exam_id','=',$exam_id)->where('class_id','=',$class_id)->where('subject_id','=',$subject_id)->first();
@@ -60,5 +66,9 @@ class ExamScheduleModel extends Model
         ->where('assign_class_lecturer.lecturer_id','=',$lecturer_id)
         ->get();
 
+    }
+
+    static public function getMark($student_id, $exam_id, $class_id, $subject_id){
+        return MarksRegisterModel::CheckAlreadyMark($student_id, $exam_id, $class_id, $subject_id);
     }
 }

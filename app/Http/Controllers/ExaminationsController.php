@@ -8,6 +8,9 @@ use App\Models\ClassModel;
 use Illuminate\Http\Request;
 use App\Models\ClassSubjectModel;
 use App\Models\ExamScheduleModel;
+use App\Models\MarksRegisterModel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AssignClassLecturerModel;
@@ -182,8 +185,142 @@ class ExaminationsController extends Controller
         return view('admin.examinations.marks_register',$data);
     }
 
-    public function submit_marks_register(Request $request){
-        dd($request->all());
+
+//submission of the marks of various courses and saving them into the database
+public function submit_marks_register(Request $request) {
+    $request->validate([
+        'mark' => 'required|array',
+        'mark.*.id' => 'required|integer',
+        'mark.*.classwork_score' => 'nullable|numeric|min:0',
+        'mark.*.assignment_score' => 'nullable|numeric|min:0',
+        'mark.*.project_score' => 'nullable|numeric|min:0',
+        'mark.*.test_score' => 'nullable|numeric|min:0',
+        'mark.*.exam_score' => 'nullable|numeric|min:0',
+        'student_id' => 'required|integer',
+        'exam_id' => 'required|integer',
+        'class_id' => 'required|integer',
+        'mark.*.subject_id' => 'required|integer',
+    ]);
+
+    $validation = 0;
+
+    DB::beginTransaction(); // Start the transaction
+
+    try {
+        foreach ($request->mark as $mark) {
+            $getExamSchedule = ExamScheduleModel::getSingle($mark['id']);
+            $full_marks = $getExamSchedule->full_marks;
+
+            $classwork_score = $mark['classwork_score'] ?? 0;
+            $assignment_score = $mark['assignment_score'] ?? 0;
+            $project_score = $mark['project_score'] ?? 0;
+            $test_score = $mark['test_score'] ?? 0;
+            $exam_score = $mark['exam_score'] ?? 0;
+
+            $total_mark = $classwork_score + $assignment_score + $project_score + $test_score + $exam_score;
+
+            if ($full_marks >= $total_mark) {
+                $getMark = MarksRegisterModel::CheckAlreadyMark(
+                    $request->student_id,
+                    $request->exam_id,
+                    $request->class_id,
+                    $mark['subject_id']
+                );
+
+                if (!empty($getMark)) {
+                    $save = $getMark;
+                } else {
+                    $save = new MarksRegisterModel;
+                    $save->created_by = Auth::user()->id;
+                }
+
+                $save->student_id = $request->student_id;
+                $save->class_id = $request->class_id;
+                $save->exam_id = $request->exam_id;
+                $save->subject_id = $mark['subject_id'];
+                $save->classwork_score = $classwork_score;
+                $save->assignment_score = $assignment_score;
+                $save->project_score = $project_score;
+                $save->test_score = $test_score;
+                $save->exam_score = $exam_score;
+                $save->save();
+            } else {
+                $validation = 1;
+            }
+        }
+
+        DB::commit(); // Commit the transaction
+
+        if ($validation == 0) {
+            return response()->json(['message' => 'Marks Register Successfully Saved'], 200);
+        } else {
+            return response()->json(['message' => 'Marks Register Successfully Saved but some Marks are greater than full mark'], 200);
+        }
+    } catch (\Exception $e) {
+        DB::rollBack(); // Rollback the transaction on error
+        // Log the error
+        Log::error('Failed to save marks register: ' . $e->getMessage());
+        return response()->json(['message' => 'Failed to save marks register', 'error' => $e->getMessage()], 500);
+    }
+}
+
+
+    public function single_submit_marks_register(Request $request)
+    {
+        $id = $request->id;
+
+        $getExamSchedule = ExamScheduleModel::getSingle($id);
+        $full_marks = $getExamSchedule->full_marks;
+
+        $classwork_score = !empty($request->classwork_score) ? $request->classwork_score : 0;
+        $assignment_score = !empty($request->assignment_score) ? $request->assignment_score : 0;
+        $project_score = !empty($request->project_score) ? $request->project_score : 0;
+        $test_score = !empty($request->test_score) ? $request->test_score : 0;
+        $exam_score = !empty($request->exam_score) ? $request->exam_score : 0;
+
+
+        $total_mark = $classwork_score + $assignment_score + $project_score + $test_score + $exam_score;
+
+        if($full_marks >= $total_mark)
+        {
+
+        $getMark = MarksRegisterModel::CheckAlreadyMark(
+            $request->student_id,
+            $request->exam_id,
+            $request->class_id,
+            $request->subject_id    );
+            if(!empty($getMark)){
+                $save = $getMark;
+            }
+            else{
+                $save = new MarksRegisterModel;
+                $save->created_by = Auth::user()->id;
+            }
+
+            $save->student_id = $request->student_id;
+            $save->class_id = $request->class_id;
+            $save->exam_id = $request->exam_id;
+            $save->subject_id = $request->subject_id;
+            $save->classwork_score = $classwork_score;
+            $save->assignment_score = $assignment_score;
+            $save->project_score = $project_score;
+            $save->test_score = $test_score;
+            $save->exam_score = $exam_score;
+            $save->save();
+
+            $json['message'] = "Marks Register Successfully Saved";
+
+        }
+
+        else{
+
+            $json['message'] = "Error! Your Total mark is greater than the Full mark Awarded";
+        }
+
+            echo json_encode($json);
+
+
+
     }
 
 
