@@ -224,6 +224,14 @@ Route::group([ 'middleware' =>'lecturer'], function() {
     Route::get('lecturer/my_exam_timetable',[ExaminationsController::class,'MyExamTimetableLecturer']);
 
     Route::get('lecturer/my_calendar',[CalendarController::class,'MyCalendarLecturer']);
+
+    // marks register urls for lecturers
+    Route::get('lecturer/marks_register',[ExaminationsController::class,'marks_register_lecturer']);
+    Route::post('lecturer/submit_marks_register',[ExaminationsController::class,'submit_marks_register']);
+    Route::post('lecturer/single_submit_marks_register',[ExaminationsController::class,'single_submit_marks_register']);
+
+
+
     Route::get('lecturer/my_notice_board',[CommunicateController::class,'MyNoticeBoardLecturer']);
 
 

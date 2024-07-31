@@ -185,6 +185,23 @@ class ExaminationsController extends Controller
         return view('admin.examinations.marks_register',$data);
     }
 
+    public function marks_register_lecturer(Request $request){
+        // dd(Auth::user()->id);
+        $data['getClass'] = AssignClassLecturerModel::getMyClassSubjectGroup(Auth::user()->id);
+        $data['getExam'] = ExamScheduleModel::getExamLecturer(Auth::user()->id);
+        // dd($data['getExam']);
+        // $data['getExam'] = ExamModel::getExam();
+
+        if(!empty($request->get('exam_id')) && !empty($request->get('class_id')))
+        {
+            $data['getSubject'] = ExamScheduleModel::getSubject($request->get('exam_id'),$request->get('class_id'));
+            $data['getStudent'] = User::getStudentClass($request->get('class_id'));
+            // dd($data['getStudentClass']);
+        }
+        $data['header_title'] = 'Marks Register';
+        return view('lecturer.marks_register',$data);
+
+    }
 
 //submission of the marks of various courses and saving them into the database
 public function submit_marks_register(Request $request) {

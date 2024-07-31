@@ -382,6 +382,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{url('lecturer/marks_register')}}" class="nav-link @if(Request::segment(2)=='marks_register') active @endif">
+              <i class="nav-icon far fa-user"></i>
+              <p>
+               Marks Register
+              </p>
+            </a>
+          </li>
 
           <li class="nav-item">
             <a href="{{url('lecturer/attendance/student')}}" class="nav-link @if(Request::segment(3)=='student') active @endif">

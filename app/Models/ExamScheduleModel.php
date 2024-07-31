@@ -27,12 +27,21 @@ class ExamScheduleModel extends Model
         ExamScheduleModel::where('exam_id','=',$exam_id)->where('class_id','=',$class_id)->delete();
 
     }
-
     static public function getExam($class_id)
     {
         return ExamScheduleModel::select('exam_schedule.*','exam.name as exam_name')
                 ->join('exam','exam.id','=','exam_schedule.exam_id')
                 ->where('exam_schedule.class_id','=',$class_id)
+                ->groupBy('exam_id')
+                ->orderBy('exam_schedule.id','desc')
+                ->get();
+    }
+    static public function getExamLecturer($lecturer_id)
+    {
+        return ExamScheduleModel::select('exam_schedule.*','exam.name as exam_name')
+                ->join('exam','exam.id','=','exam_schedule.exam_id')
+                ->join('assign_class_lecturer','assign_class_lecturer.class_id','=','exam_schedule.class_id')
+                ->where('assign_class_lecturer.lecturer_id','=',$lecturer_id)
                 ->groupBy('exam_id')
                 ->orderBy('exam_schedule.id','desc')
                 ->get();
