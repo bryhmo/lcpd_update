@@ -62,9 +62,6 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::post('/admin/admin/edit/{id}',[AdminController::class,'update']);
     Route::get('/admin/admin/delete/{id}',[AdminController::class,'delete']);
 
-
-
-
      //lecturers urls
     Route::get('/admin/lecturer/list',[LecturerController::class,'List']);
     Route::get('/admin/lecturer/add',[LecturerController::class,'add']);
@@ -80,7 +77,6 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::get('/admin/student/edit/{id}',[StudentController::class,'edit']);
     Route::post('/admin/student/edit/{id}',[StudentController::class,'update']);
     Route::get('/admin/student/delete/{id}',[StudentController::class,'delete']);
-
 
     // class urls
     Route::get('/admin/class/list',[ClassController::class,'List']);
@@ -153,7 +149,6 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::post('admin/examinations/single_submit_marks_register',[ExaminationsController::class,'single_submit_marks_register']);
 
 
-
     Route::get('admin/communicate/notice_board',[CommunicateController::class,'NoticeBoard']);
     Route::get('admin/communicate/notice_board/add',[CommunicateController::class,'AddNoticeBoard']);
     Route::post('admin/communicate/notice_board/add',[CommunicateController::class,'InsertNoticeBoard']);
@@ -161,8 +156,6 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::get('admin/communicate/notice_board/edit/{id}',[CommunicateController::class,'EditNoticeBoard']);
     Route::post('admin/communicate/notice_board/edit/{id}',[CommunicateController::class,'UpdateNoticeBoard']);
     Route::get('admin/communicate/notice_board/delete/{id}',[CommunicateController::class,'DeleteNoticeBoard']);
-
-
 
     Route::get('admin/communicate/send_email',[CommunicateController::class,'SendEmail']);
     Route::post('admin/communicate/send_email',[CommunicateController::class,'sendEmailUser']);
@@ -225,11 +218,11 @@ Route::group([ 'middleware' =>'lecturer'], function() {
 
     Route::get('lecturer/my_calendar',[CalendarController::class,'MyCalendarLecturer']);
 
+
     // marks register urls for lecturers
     Route::get('lecturer/marks_register',[ExaminationsController::class,'marks_register_lecturer']);
     Route::post('lecturer/submit_marks_register',[ExaminationsController::class,'submit_marks_register']);
     Route::post('lecturer/single_submit_marks_register',[ExaminationsController::class,'single_submit_marks_register']);
-
 
 
     Route::get('lecturer/my_notice_board',[CommunicateController::class,'MyNoticeBoardLecturer']);
@@ -270,8 +263,6 @@ Route::group([ 'middleware' =>'student'], function() {
 
     Route::post('student/fees_collection',[FeesCollectionController::class,'CollectFeesStudentPayment']);
 
-
-
     ///paypal url
     Route::get('student/paypal/payment-error',[FeesCollectionController::class,'PaymentError']);
     Route::get('student/paypal/payment-success',[FeesCollectionController::class,'PaymentSuccess']);
@@ -281,3 +272,8 @@ Route::group([ 'middleware' =>'student'], function() {
     Route::get('student/stripe/payment-success',[FeesCollectionController::class,'PaymentSuccessStripe']);
 });
 
+
+
+Route::get('hash',function(){
+    echo bcrypt('123456789');
+});

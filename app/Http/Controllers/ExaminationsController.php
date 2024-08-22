@@ -189,8 +189,6 @@ class ExaminationsController extends Controller
         // dd(Auth::user()->id);
         $data['getClass'] = AssignClassLecturerModel::getMyClassSubjectGroup(Auth::user()->id);
         $data['getExam'] = ExamScheduleModel::getExamLecturer(Auth::user()->id);
-        // dd($data['getExam']);
-        // $data['getExam'] = ExamModel::getExam();
 
         if(!empty($request->get('exam_id')) && !empty($request->get('class_id')))
         {
@@ -217,6 +215,8 @@ public function submit_marks_register(Request $request) {
         'exam_id' => 'required|integer',
         'class_id' => 'required|integer',
         'mark.*.subject_id' => 'required|integer',
+        'mark.*.full_marks' => 'required|integer',
+        'mark.*.passing_marks' => 'required|integer',
     ]);
 
     $validation = 0;
@@ -227,8 +227,9 @@ public function submit_marks_register(Request $request) {
         foreach ($request->mark as $mark) {
             $getExamSchedule = ExamScheduleModel::getSingle($mark['id']);
             $full_marks = $getExamSchedule->full_marks;
-
             $classwork_score = $mark['classwork_score'] ?? 0;
+            $full_marks = $mark['full_marks'] ?? 0;
+            $passing_marks = $mark['passing_marks'] ?? 0;
             $assignment_score = $mark['assignment_score'] ?? 0;
             $project_score = $mark['project_score'] ?? 0;
             $test_score = $mark['test_score'] ?? 0;
@@ -260,6 +261,8 @@ public function submit_marks_register(Request $request) {
                 $save->project_score = $project_score;
                 $save->test_score = $test_score;
                 $save->exam_score = $exam_score;
+                $save->full_marks = $full_marks;
+                $save->passing_marks = $passing_marks;
                 $save->save();
             } else {
                 $validation = 1;
@@ -323,6 +326,8 @@ public function submit_marks_register(Request $request) {
             $save->project_score = $project_score;
             $save->test_score = $test_score;
             $save->exam_score = $exam_score;
+            $save->full_marks = $getExamSchedule->full_marks;
+            $save->passing_marks = $getExamSchedule->passing_marks;
             $save->save();
 
             $json['message'] = "Marks Register Successfully Saved";
@@ -339,11 +344,6 @@ public function submit_marks_register(Request $request) {
 
 
     }
-
-
-
-
-
 
     /***
     STUDENT SIDE OF THE EXAMINATIONATION TIMETABLE
@@ -438,6 +438,41 @@ public function submit_marks_register(Request $request) {
 
 
     public function MyExamResult(){
-        return view('student.my_exam_result');
+        $result = array();
+        $getExam = MarksRegisterModel::getExam(Auth::user()->id);
+        foreach($getExam as $value)
+        {
+            $dataE = array();
+            $dataE['exam_name'] = $value->exam_name;
+
+            $getExamSubject= MarksRegisterModel::getExamSubject($value->exam_id,Auth::user()->id);
+            $dataSubject = array();
+            foreach($getExamSubject as $exam)
+            {
+                $total_score = $exam['classwork_score'] + $exam['assignment_score'] + $exam['test_score'] + $exam['project_score'] + $exam['exam_score'];
+                $dataS = array();
+                $dataS['subject_name'] = $exam['subject_name'];
+                $dataS['subject_type'] = $exam['subject_type'];
+                $dataS['subject_unit'] = $exam['subject_unit'];
+                $dataS['subject_code'] = $exam['subject_code'];
+                $dataS['classwork_score'] = $exam['classwork_score'];
+                $dataS['test_score'] = $exam['test_score'];
+                $dataS['project_score'] = $exam['project_score'];
+                $dataS['assignment_score'] = $exam['assignment_score'];
+                $dataS['exam_score'] = $exam['exam_score'];
+                $dataS['total_score'] = $total_score;
+                $dataS['full_marks'] = $exam['full_marks'];
+                $dataS['passing_marks'] = $exam['passing_marks'];
+                $dataSubject[] = $dataS;
+
+            }
+            $dataE['subject'] = $dataSubject;
+            $result[]= $dataE;
+
+        }
+        // dd($result);
+        $data['getRecord']= $result;
+        $data['header_title'] = "My Exam Result";
+        return view('student.my_exam_result',$data);
     }
 }
