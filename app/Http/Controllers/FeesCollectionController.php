@@ -28,6 +28,11 @@ class FeesCollectionController extends Controller
         return view('admin.fees_collection.collect_fees' , $data);
     }
 
+    public function student_fees_receipts(){
+        $data['header_title'] = "Student Fees Receipt";
+        return view('admin.fees_collection.student_fees_receipts',$data);
+    }
+
     Public function collect_fees_report(){
         $data['getRecord'] = StudentAddFeesModel::getRecord();
         $data['getClass'] = ClassModel::getClass();
@@ -57,7 +62,7 @@ class FeesCollectionController extends Controller
             if($RemainingAmount >= $request->amount)
             {
                 $remaining_amount_user = $RemainingAmount - $request->amount;
-                
+
                 $payment = new StudentAddFeesModel;
                 $payment->student_id = $student_id;
                 $payment->class_id = $getStudent->class_id;
@@ -69,7 +74,7 @@ class FeesCollectionController extends Controller
                 $payment->created_by = Auth::user()->id;
                 $payment->is_payment = 1;
                 $payment->save();
-    
+
                 return redirect()->back()->with("success","Fees Successfuly Add");
             }
             else{
@@ -80,21 +85,54 @@ class FeesCollectionController extends Controller
             return redirect()->back()->with("error","Please add a valid amount greater than zero");
 
         }
-       
-        
+
+
     }
 
-    //student side 
+    //student side
+    public function StudentCourses(Request $request){
+        $student_id = Auth::user()->id;
+        $data['getFees'] = StudentAddFeesModel::getFees($student_id);
+        // dd($data['getFees']);
+        $getStudent =User::getSingleClass($student_id);
+        $data['getStudent'] = $getStudent;
+
+        $data['header_title'] = "Course Materials";
+        $data['paid_amount'] = StudentAddFeesModel::getPaidAmount(Auth::user()->id,Auth::user()->class_id);
+        return view('student.my_course_materials' , $data);
+    }
+    public function student_course_material(Request $request){
+        $student_id = Auth::user()->id;
+        $data['getFees'] = StudentAddFeesModel::getFees($student_id);
+        // dd($data['getFees']);
+        $getStudent =User::getSingleClass($student_id);
+        $data['getStudent'] = $getStudent;
+
+        $data['header_title'] = "Student Course Materials";
+        $data['paid_amount'] = StudentAddFeesModel::getPaidAmount(Auth::user()->id,Auth::user()->class_id);
+        return view('lecturer.student_course_material' , $data);
+    }
     public function CollectFeesStudent(Request $request){
         $student_id = Auth::user()->id;
         $data['getFees'] = StudentAddFeesModel::getFees($student_id);
         // dd($data['getFees']);
         $getStudent =User::getSingleClass($student_id);
         $data['getStudent'] = $getStudent;
-       
+
         $data['header_title'] = "Fees Collection";
         $data['paid_amount'] = StudentAddFeesModel::getPaidAmount(Auth::user()->id,Auth::user()->class_id);
         return view('student.my_fees_collection' , $data);
+    }
+    public function FeesReceipts(Request $request){
+        $student_id = Auth::user()->id;
+        $data['getFees'] = StudentAddFeesModel::getFees($student_id);
+        // dd($data['getFees']);
+        $getStudent =User::getSingleClass($student_id);
+        $data['getStudent'] = $getStudent;
+
+        $data['header_title'] = "Fees Receipts";
+        $data['paid_amount'] = StudentAddFeesModel::getPaidAmount(Auth::user()->id,Auth::user()->class_id);
+        return view('student.my_fees_receipts' , $data);
     }
 
 
@@ -108,12 +146,12 @@ class FeesCollectionController extends Controller
         if(!empty($request->amount))
         {
             $RemainingAmount = $getStudent->amount - $paid_amount;
-           
+
             if($RemainingAmount >= $request->amount)
             {
 
                 $remaining_amount_user = $RemainingAmount - $request->amount;
-                
+
                 $payment = new StudentAddFeesModel;
                 $payment->student_id = Auth::user()->id;;
                 $payment->class_id = Auth::user()->class_id;
@@ -144,7 +182,7 @@ class FeesCollectionController extends Controller
                     // header('Location:https://www.paypal.com/cga-bin/webscr?',$query_string);
                     header('Location:https:https://www.sandbox.paypal.com/cgi-bin/webscr?'.$query_string);
                     exit();
-               } 
+               }
                elseif($request->patment_type == 'Stripe'){
 
                 $setPublicKey = $getSetting->stripe_key;
@@ -172,10 +210,10 @@ class FeesCollectionController extends Controller
                     // Session::put('stripe_session_id',$session['id']);
                     $data['setPublicKey'] = $setPublicKey;
 
-               }    
+               }
                elseif($request->patment_type == 'BankTransfer'){
 
-               }    
+               }
                elseif($request->patment_type == 'Paypal'){
 
                }
@@ -185,14 +223,14 @@ class FeesCollectionController extends Controller
                elseif($request->patment_type == 'FlutterWave'){
 
                }
-                 
+
                return redirect()->back()->with("success","Fees Successfuly Add");
 
             }
             else
             {
                 return redirect()->back()->with("error","Your Amount is greater Than the Remaining Amount");
-                 
+
             }
 
 

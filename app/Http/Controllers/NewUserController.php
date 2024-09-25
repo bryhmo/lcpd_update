@@ -9,7 +9,7 @@ class NewUserController extends Controller
 {
     public function index()
     {
-        $users = NewUser::paginate(15);
+        $users = NewUser::paginate(7);
         return view('admin.newuser.index', compact('users'));
     }
 
@@ -20,13 +20,15 @@ class NewUserController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
+        // Validate the incoming request data
         $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'dob' => 'required|date',
             'gender' => 'required|string|max:10',
             'nationality' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:new_users',
             'phone' => 'required|string|max:20',
             'address' => 'required|string',
             'kin_name' => 'required|string|max:255',
@@ -38,22 +40,27 @@ class NewUserController extends Controller
             'grad_year' => 'required|integer',
             'gpa' => 'required|numeric|between:0,4.00',
             'experience' => 'nullable|string',
-            'certificate' => 'nullable|file|mimes:pdf,jpg,png',
+            'certificate' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
             'program' => 'required|string|max:255',
             'intake' => 'required|string|max:10',
             'statement' => 'required|string',
         ]);
 
+        // Create a new user
         $user = new NewUser($validatedData);
 
+        // Handle file upload
         if ($request->hasFile('certificate')) {
-            $user->certificate = $request->file('certificate')->store('certificates');
+            $user->certificate = $request->file('certificate')->store('certificates', 'public');
         }
 
+        // Save the user to the database
         $user->save();
 
-        return redirect()->route('newuser.index')->with('success', 'User registered successfully');
+        // Redirect with a success message
+        return redirect()->back()->with('success', 'User registered successfully');
     }
+
 
     public function show($id)
     {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MarksGradeModel;
 use App\Models\User;
 use App\Models\ExamModel;
 use App\Models\ClassModel;
@@ -345,6 +346,59 @@ public function submit_marks_register(Request $request) {
 
     }
 
+
+    public function marks_grade(){
+
+        $data['header_title'] = 'Marks Grade';
+        $data['getRecord'] = MarksGradeModel::getRecord();
+
+        return view('admin.examinations.marks_grade.list',$data);
+
+    }
+
+
+    public function marks_grade_add(){
+
+        $data['header_title'] = 'Add New Marks Grade';
+
+        return view('admin.examinations.marks_grade.add',$data);
+    }
+    public function marks_grade_edit($id){
+
+        $data['header_title'] = 'Edit Marks Grade';
+        $data['getRecord'] = MarksGradeModel::getSingle($id);
+
+        return view('admin.examinations.marks_grade.edit',$data);
+    }
+
+
+    public function marks_grade_insert(Request $request){
+        $mark = new MarksGradeModel;
+        $mark->name = trim($request->name);
+        $mark->percent_from= trim($request->percent_from);
+        $mark->percent_to= trim($request->percent_to);
+        $mark->created_by= Auth::user()->id;
+        $mark->save();
+        return redirect('admin/examinations/marks_grade')->with('success', 'Marks Grade Added Successfully');
+    }
+    public function marks_grade_update($id, Request $request){
+        $mark = MarksGradeModel::getSingle($id);
+        $mark->name = trim($request->name);
+        $mark->percent_from= trim($request->percent_from);
+        $mark->percent_to= trim($request->percent_to);
+        $mark->save();
+        return redirect('admin/examinations/marks_grade')->with('success', 'Marks Grade Updated Successfully');
+    }
+
+    public function marks_grade_delete($id, Request $request){
+        $mark = MarksGradeModel::getSingle($id);
+        $mark->delete();
+        return redirect('admin/examinations/marks_grade')->with('success', 'Marks Grade Deleted Successfully');
+    }
+
+
+
+
     /***
     STUDENT SIDE OF THE EXAMINATIONATION TIMETABLE
 
@@ -472,7 +526,9 @@ public function submit_marks_register(Request $request) {
         }
         // dd($result);
         $data['getRecord']= $result;
+
         $data['header_title'] = "My Exam Result";
+
         return view('student.my_exam_result',$data);
     }
 }

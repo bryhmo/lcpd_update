@@ -73,43 +73,38 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body p-0">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>id</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Admitted</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
+
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Admitted/NotAdmitted</th>
+                        <th>Date of Application</th>
+                        <th>Action</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
                     @foreach($users as $user)
-                    <tr>
+                      <tr>
                         <td>{{$user->id}}</td>
                         <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>NotAdmitted</td>
+                        <td>{{ date('d:m:Y h:i:A',strtotime($user->created_at))}}</td>
                         <td>
-                            <form action="{{ route('users.toggleAdmission', $user->id) }}" method="POST" class="toggle-admission">
-                                @csrf
-                                <button type="submit">
-                                    {{ $user->admitted ? 'Not Admitted' : 'Admitted' }}
-                                </button>
-                            </form>
+                          <a href="{{url('admin/admin/edit/'.$user->id)}}" class="btn btn-primary">Edit</a>
+                          <a href="{{url('admin/admin/edit/'.$user->id)}}" class="btn btn-success">view</a>
+                          <a href="{{url('admin/admin/delete/'.$user->id)}}" class="btn btn-danger">Delete</a>
                         </td>
-                        <td>
-                            <a href="{{ route('users.show', $user->id) }}">View</a>
-                            <a href="{{ route('users.edit', $user->id) }}">Edit</a>
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-              </table>
+                      </tr>
+                    @endforeach
+                    </tbody>
+                  </table>
+
+
               <div style="padding: 10px;float:right">
                 {!! $users->appends(Illuminate\Support\Facades\Request::except('page'))->links()!!}
               </div>

@@ -35,10 +35,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('register', [AuthController::class,'login'])->name('register');
+
+
 Route::get('apply',function(){
     return view('auth.apply');
 })->name('apply');
+
+
+Route::post('admin/users', [NewUserController::class, 'store']);
+
+
 Route::post('/login',[AuthController::class,'AuthLogin']);
 Route::get('/logout',[AuthController::class,'logout']);
 Route::get('/forget-password',[AuthController::class,'forgetpassword']);
@@ -77,6 +86,15 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::get('/admin/student/edit/{id}',[StudentController::class,'edit']);
     Route::post('/admin/student/edit/{id}',[StudentController::class,'update']);
     Route::get('/admin/student/delete/{id}',[StudentController::class,'delete']);
+
+
+    // new registered student url
+    Route::get('/admin/newuser/list',[NewUserController::class,'index']);
+    Route::get('/admin/newuser/add',[NewUserController::class,'add']);
+    Route::post('/admin/newuser/add',[NewUserController::class,'insert']);
+    Route::get('/admin/newuser/view/{id}',[NewUserController::class,'view']);
+    Route::get('/admin/newuser/admit/{id}',[NewUserController::class,'admit']);
+    Route::get('/admin/newuser/marks_grade/delete/{id}',[NewUserController::class,'delete']);
 
     // class urls
     Route::get('/admin/class/list',[ClassController::class,'List']);
@@ -149,6 +167,24 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::post('admin/examinations/single_submit_marks_register',[ExaminationsController::class,'single_submit_marks_register']);
 
 
+     //marks grades routes
+
+     Route::get('/admin/examinations/marks_grade',[ExaminationsController::class,'marks_grade']);
+     Route::get('/admin/examinations/marks_grade/add',[ExaminationsController::class,'marks_grade_add']);
+     Route::post('/admin/examinations/marks_grade/add',[ExaminationsController::class,'marks_grade_insert']);
+     Route::get('/admin/examinations/marks_grade/edit/{id}',[ExaminationsController::class,'marks_grade_edit']);
+     Route::post('/admin/examinations/marks_grade/edit/{id}',[ExaminationsController::class,'marks_grade_update']);
+     Route::get('/admin/examinations/marks_grade/delete/{id}',[ExaminationsController::class,'marks_grade_delete']);
+
+
+
+     //students Attendance Route
+     Route::get('/admin/attendance/student',[ AttendanceController::class,'AttendanceStudent']);
+     Route::post('/admin/attendance/student/save',[ AttendanceController::class,'AttendanceStudentSubmit']);
+     Route::get('/admin/attendance/report',[ AttendanceController::class,'AttendanceReport']);
+
+
+
     Route::get('admin/communicate/notice_board',[CommunicateController::class,'NoticeBoard']);
     Route::get('admin/communicate/notice_board/add',[CommunicateController::class,'AddNoticeBoard']);
     Route::post('admin/communicate/notice_board/add',[CommunicateController::class,'InsertNoticeBoard']);
@@ -164,17 +200,16 @@ Route::group([ 'middleware' =>'admin'], function() {
 
 
 
+    Route::get('admin/fees_collection/student_fees_receipts',[FeesCollectionController::class,'student_fees_receipts']);
     Route::get('admin/fees_collection/collect_fees',[FeesCollectionController::class,'collect_fees']);
     Route::get('admin/fees_collection/collect_fees/add_fees/{student_id}',[FeesCollectionController::class,'collect_fees_add']);
     Route::post('admin/fees_collection/collect_fees/add_fees/{student_id}',[FeesCollectionController::class,'collect_fees_insert']);
 
     Route::get('admin/fees_collection/collect_fees_report',[FeesCollectionController::class,'collect_fees_report']);
 
-
     Route::prefix('admin')->group(function () {
         Route::get('users', [NewUserController::class, 'index'])->name('users.index');
         Route::get('users/create', [NewUserController::class, 'create'])->name('users.create');
-        Route::post('users', [NewUserController::class, 'store'])->name('users.store');
         Route::get('users/{id}', [NewUserController::class, 'show'])->name('users.show');
         Route::get('users/{id}/edit', [NewUserController::class, 'edit'])->name('users.edit');
         Route::put('users/{id}', [NewUserController::class, 'update'])->name('users.update');
@@ -219,6 +254,10 @@ Route::group([ 'middleware' =>'lecturer'], function() {
     Route::get('lecturer/my_calendar',[CalendarController::class,'MyCalendarLecturer']);
 
 
+    //student course
+    Route::get('lecturer/student_course_material',[FeesCollectionController::class,'student_course_material']);
+
+
     // marks register urls for lecturers
     Route::get('lecturer/marks_register',[ExaminationsController::class,'marks_register_lecturer']);
     Route::post('lecturer/submit_marks_register',[ExaminationsController::class,'submit_marks_register']);
@@ -226,6 +265,11 @@ Route::group([ 'middleware' =>'lecturer'], function() {
 
 
     Route::get('lecturer/my_notice_board',[CommunicateController::class,'MyNoticeBoardLecturer']);
+
+    //students Attendance Route for lecturer side
+    Route::get('lecturer/attendance/student',[ AttendanceController::class,'AttendanceStudentLectuter']);
+    Route::post('lecturer/attendance/student/save',[ AttendanceController::class,'AttendanceStudentSubmit']);
+    Route::get('lecturer/attendance/report',[ AttendanceController::class,'AttendanceReport']);
 
 
 });
@@ -259,7 +303,9 @@ Route::group([ 'middleware' =>'student'], function() {
     Route::get('/student/my_notice_board',[CommunicateController::class,'MyNoticeBoardStudent']);
 
 
+    Route::get('student/course_material',[FeesCollectionController::class,'StudentCourses']);
     Route::get('student/fees_collection',[FeesCollectionController::class,'CollectFeesStudent']);
+    Route::get('student/fees_receipts',[FeesCollectionController::class,'FeesReceipts']);
 
     Route::post('student/fees_collection',[FeesCollectionController::class,'CollectFeesStudentPayment']);
 

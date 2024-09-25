@@ -32,7 +32,6 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>#</th>
                         <th>Subject Name</th>
                         <th>Type</th>
                         <th>Code</th>
@@ -43,6 +42,7 @@
                         <th>Project Score</th>
                         <th>Exam Score</th>
                         <th>Total Score</th>
+                        <th>Grade</th>
                         <th>Passing Mark</th>
                         <th>Full Mark</th>
                         <th>Result</th>
@@ -59,9 +59,9 @@
                             @php
                                $total_score = $total_score + $exam['total_score'];
                                $full_marks = $full_marks + $exam['full_marks'];
+
                             @endphp
                         <tr>
-                            <td></td>
                             <td>{{$exam['subject_name']}}</td>
                             <td>{{$exam['subject_type']}}</td>
                             <td>{{$exam['subject_code']}}</td>
@@ -72,6 +72,13 @@
                             <td>{{$exam['project_score']}}</td>
                             <td>{{$exam['exam_score']}}</td>
                             <td style="background-color: blueviolet;color:white">{{$exam['total_score']}}</td>
+                            @php
+                                $totalScore = $exam['total_score'];
+                               $getLoopGrade = App\Models\MarksGradeModel::getGrade($totalScore);
+                            @endphp
+                            <td style="background-color:blanchedalmond;">
+                                <span style="color: blueviolet;">{{$getLoopGrade}}</span>
+                            </td>
                             <td>{{$exam['passing_marks']}}</td>
                             <td>{{$exam['full_marks']}}</td>
                             <td>
@@ -82,13 +89,21 @@
                                     <span style="color:red;font-weight:bold;">Fail</span>
                                @endif
                             </td>
+
                         </tr>
                         @endforeach
 
                         <tr>
                             <td colspan="4"><b>Grand Total : {{$total_score}}/{{$full_marks}}</b></td>
 
-                            <td colspan="10"><b>Percentage : {{round(($total_score*100)/$full_marks,2)}}<span style="color: red;">%</span> </b></td>
+                            <td colspan="4">
+                                @php
+                                    $percentage = ($total_score*100)/$full_marks;
+                                    $getGrade =App\Models\MarksGradeModel::getGrade($percentage);
+                                @endphp
+                                <b>Percentage : {{round($percentage,2)}}<span style="color: red;">%</span> </b>
+                            </td>
+                            <td colspan="6"><b>Grade : <span style="color: blueviolet">{{$getGrade}}</span> </b></td>
                         </tr>
                     </tbody>
                 </table>

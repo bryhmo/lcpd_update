@@ -183,16 +183,17 @@ button.previous:hover {
     </header>
     <div class="container">
         <h2>Master's Degree Registration Form</h2>
-        <form id="registrationForm">
+        <form id="registrationForm" method="post" action="/admin/users">
             <!-- Personal Information -->
+            @csrf
             <div class="form-section" id="section1">
                 <fieldset>
                     <legend>Personal Information</legend>
                     <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" name="firstName" required>
+                    <input type="text" id="firs_name" name="firstName" required>
 
                     <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName" required>
+                    <input type="text" id="last_name" name="lastName" required>
 
                     <label for="dob">Date of Birth:</label>
                     <input type="date" id="dob" name="dob" required>
@@ -226,16 +227,16 @@ button.previous:hover {
 
                     <legend>Next of Kin Information</legend>
                     <label for="kinName">Next of Kin Name:</label>
-                    <input type="text" id="kinName" name="kinName" required>
+                    <input type="text" id="kinName" name="kin_name" required>
 
                     <label for="kinRelationship">Relationship:</label>
-                    <input type="text" id="kinRelationship" name="kinRelationship" required>
+                    <input type="text" id="kinRelationship" name="kin_relationship" required>
 
                     <label for="kinPhone">Next of Kin Phone Number:</label>
-                    <input type="tel" id="kinPhone" name="kinPhone" required>
+                    <input type="tel" id="kinPhone" name="kin_phone" required>
 
                     <label for="kinAddress">Next of Kin Address:</label>
-                    <textarea id="kinAddress" name="kinAddress" required></textarea>
+                    <textarea id="kinAddress" name="kin_address" required></textarea>
 
                     <button type="button" class="previous">Previous</button>
                     <button type="button" class="next">Next</button>
@@ -247,13 +248,13 @@ button.previous:hover {
                 <fieldset>
                     <legend>Academic Background</legend>
                     <label for="undergradDegree">Undergraduate Degree:</label>
-                    <input type="text" id="undergradDegree" name="undergradDegree" required>
+                    <input type="text" id="undergradDegree" name="undergrad_degree" required>
 
                     <label for="university">University/College:</label>
                     <input type="text" id="university" name="university" required>
 
                     <label for="gradYear">Year of Graduation:</label>
-                    <input type="number" id="gradYear" name="gradYear" min="1900" max="2100" step="1" required>
+                    <input type="number" id="gradYear" name="grad_year" min="1900" max="2100" step="1" required>
 
                     <label for="gpa">GPA:</label>
                     <input type="number" step="0.01" min="0.5" max="7.0" value="0.5" id="gpa" name="gpa" required>

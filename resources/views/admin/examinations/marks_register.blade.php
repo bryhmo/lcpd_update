@@ -144,6 +144,13 @@
                                   <div style="margin-bottom: 10px">
                                     <b>Total Mark :</b>{{$totalMark}} <br/>
                                     <b>Passing Mark :</b>{{$subject->passing_marks}} <br/>
+                                    @php
+                                    $getLoopGrade =App\Models\MarksGradeModel::getGrade($totalMark);
+                                    @endphp
+
+                                    @if (!empty($getLoopGrade))
+                                    <b>Grade : </b> <span style="color:blueviolet"> {{$getLoopGrade}} </span><br/>
+                                    @endif
                                     @if($totalMark >= $subject->passing_marks)
                                     <span style="color: green; font-weight:bold">Pass</span>
                                     @else
@@ -176,15 +183,21 @@
                                   <br/>
                                   @php
                                     $percentage = ($totalStudentMark * 100)/$totalFullMarks;
+                                    $getGrade =App\Models\MarksGradeModel::getGrade($percentage);
+
                                   @endphp
                                   <br>
-                                  percentage : {{round($percentage,2)}}%
+                                  <b>percentage :</b> {{round($percentage,2)}}%
                                   <br>
-                                  @if ($pass_fail_vali == 0)
+                                  @if(!empty($getGrade))
+                                    <b>Grade: </b> {{$getGrade}}
+                                  @endif
+                                  <br>
+                                  {{-- @if ($pass_fail_vali == 0)
                                     Result : <span style="color: green; font-weight:bold">Pass</span>
                                   @else
                                     Result : <span style="color: red; font-weight:bold">Fail</span>
-                                  @endif
+                                  @endif --}}
                                 @endif
                             </td>
                         </tr>
