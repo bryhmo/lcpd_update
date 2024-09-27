@@ -269,7 +269,7 @@ Route::group([ 'middleware' =>'lecturer'], function() {
     //students Attendance Route for lecturer side
     Route::get('lecturer/attendance/student',[ AttendanceController::class,'AttendanceStudentLectuter']);
     Route::post('lecturer/attendance/student/save',[ AttendanceController::class,'AttendanceStudentSubmit']);
-    Route::get('lecturer/attendance/report',[ AttendanceController::class,'AttendanceReport']);
+    Route::get('lecturer/attendance/report',[ AttendanceController::class,'AttendanceReportLecturer']);
 
 
 });
