@@ -113,18 +113,37 @@ class StudentAttendanceModel extends Model
 
 
    static public function getRecordStudent($student_id){
-    $return = StudentAttendanceModel::select('student_attendance.*','class.name as class_name','student.name as student_name','student.last_name as student_last_name', 'student.admission_number as student_admission_number')
+        $return = StudentAttendanceModel::select('student_attendance.*','class.name as class_name','student.name as student_name','student.last_name as student_last_name', 'student.admission_number as student_admission_number')
+        ->join('class','class.id','=','student_attendance.class_id')
+        ->join('users as student','student.id','=','student_attendance.student_id')
+        ->where('student_attendance.student_id','=',$student_id);
+        if(!empty(Request::get('class_id'))){
+            $return = $return->where('student_attendance.class_id','=',Request::get('class_id'));
+        }
+        if(!empty(Request::get('attendance_date'))){
+            $return = $return->where('student_attendance.attendance_date','=',Request::get('attendance_date'));
+        }
+        // attendance_type is the next
+        if(!empty(Request::get('attendance_type'))){
+            $return = $return->where('student_attendance.attendance_type','=',Request::get('attendance_type'));
+        }
+
+
+
+        $return = $return->orderBy('student_attendance.id','desc')
+        ->paginate(40);
+
+        return  $return ;
+
+   }
+
+
+   static public function getClassStudent($student_id){
+    return  StudentAttendanceModel::select('student_attendance.*','class.name as class_name')
     ->join('class','class.id','=','student_attendance.class_id')
-    ->join('users as student','student.id','=','student_attendance.student_id')
-    ->where('student_attendance.student_id','=',$student_id);
-
-
-
-    $return = $return->orderBy('student_attendance.id','desc')
-    ->paginate(40);
-
-    return  $return ;
-
+    ->where('student_attendance.student_id','=',$student_id)
+    ->groupBy('student_attendance.class_id')
+    ->get();
    }
 
 

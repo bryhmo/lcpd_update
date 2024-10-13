@@ -93,8 +93,9 @@ class AttendanceController extends Controller
 
     //student side of the attendance
     public function MyAttendanceStudent(){
+        $data['getClass'] = StudentAttendanceModel::getClassStudent(Auth::user()->id);
         $data['getRecord'] = StudentAttendanceModel::getRecordStudent(Auth::user()->id);
-        dd($data['getRecord']);
+        // dd($data['getRecord']);
         $data['header_title'] = 'My Attendance';
         return view('student.my_attendance' ,$data);
     }
