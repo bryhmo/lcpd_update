@@ -24,10 +24,7 @@ class AttendanceController extends Controller
         $data['header_title'] = "Student Attendance";
         return view('admin/attendance/student',$data);
     }
-    //student side of the attendance
-    public function MyAttendanceStudent(){
-        return view('student.my_attendance');
-    }
+
 
     public function AttendanceStudentSubmit(Request $request){
         $check_attendance = StudentAttendanceModel::CheckAlreadyAttendance($request->student_id,$request->attendance_date,$request->class_id);
@@ -91,5 +88,14 @@ class AttendanceController extends Controller
 
         $data['header_title'] = 'Attendance Report';
         return view('lecturer.attendance.report',$data);
+    }
+
+
+    //student side of the attendance
+    public function MyAttendanceStudent(){
+        $data['getRecord'] = StudentAttendanceModel::getRecordStudent(Auth::user()->id);
+        dd($data['getRecord']);
+        $data['header_title'] = 'My Attendance';
+        return view('student.my_attendance' ,$data);
     }
 }

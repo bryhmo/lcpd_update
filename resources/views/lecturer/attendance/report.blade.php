@@ -73,7 +73,7 @@
                       </div>
 
 
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                       <button type="submit" class="btn btn-primary" style="margin-top: 33px">Search</button>
                       <a href="{{url('lecturer/attendance/report')}}" class="btn btn-success" style="margin-top: 33px">Reset</a>
                     </div>
