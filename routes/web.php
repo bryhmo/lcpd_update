@@ -10,6 +10,7 @@ use App\Http\Controllers\NewUserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AttendanceController;
@@ -206,6 +207,18 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::post('admin/fees_collection/collect_fees/add_fees/{student_id}',[FeesCollectionController::class,'collect_fees_insert']);
 
     Route::get('admin/fees_collection/collect_fees_report',[FeesCollectionController::class,'collect_fees_report']);
+
+
+    //home work route start
+    Route::get('admin/homework/homework',[HomeworkController::class,'homework']);
+    Route::get('admin/homework/homework/add',[HomeworkController::class,'add']);
+    Route::post('admin/ajax_get_subject',[HomeworkController::class,'ajax_get_subject']);
+    Route::post('admin/homework/homework/add',[HomeworkController::class,'insert']);
+    Route::get('admin/homework/homework/edit/{id}',[HomeworkController::class,'edit']);
+    Route::post('admin/homework/homework/edit/{id}',[HomeworkController::class,'update']);
+    Route::get('admin/homework/homework/delete/{id}',[HomeworkController::class,'delete']);
+
+    //home work route end
 
     Route::prefix('admin')->group(function () {
         Route::get('users', [NewUserController::class, 'index'])->name('users.index');

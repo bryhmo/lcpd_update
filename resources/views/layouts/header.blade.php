@@ -357,6 +357,32 @@
             </li>
           </ul>
         </li>
+
+        <li class="nav-item  @if(Request::segment(2)=='homework')  menu-is-opening menu-open @endif">
+          <a href="#" class="nav-link   @if(Request::segment(2)=='homework' ) active @endif">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+              HomeWork
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{url('admin/homework/homework')}}" class="nav-link  @if(Request::segment(3)=='homework') active @endif ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Homework</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{url('admin/homework/homework_report')}}" class="nav-link  @if(Request::segment(3)=='homework_report') active @endif ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Homework Report</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+
         <li class="nav-item">
           <a href="{{url('admin/account')}}" class="nav-link @if(Request::segment(2)=='account') active @endif">
             <i class="nav-icon far fa-user"></i>
