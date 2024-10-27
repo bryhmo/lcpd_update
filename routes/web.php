@@ -209,7 +209,7 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::get('admin/fees_collection/collect_fees_report',[FeesCollectionController::class,'collect_fees_report']);
 
 
-    //home work route start
+    // admin home work route start
     Route::get('admin/homework/homework',[HomeworkController::class,'homework']);
     Route::get('admin/homework/homework/add',[HomeworkController::class,'add']);
     Route::post('admin/ajax_get_subject',[HomeworkController::class,'ajax_get_subject']);
@@ -218,7 +218,7 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::post('admin/homework/homework/edit/{id}',[HomeworkController::class,'update']);
     Route::get('admin/homework/homework/delete/{id}',[HomeworkController::class,'delete']);
 
-    //home work route end
+    // admin home work route end
 
     Route::prefix('admin')->group(function () {
         Route::get('users', [NewUserController::class, 'index'])->name('users.index');
@@ -283,6 +283,18 @@ Route::group([ 'middleware' =>'lecturer'], function() {
     Route::get('lecturer/attendance/student',[ AttendanceController::class,'AttendanceStudentLectuter']);
     Route::post('lecturer/attendance/student/save',[ AttendanceController::class,'AttendanceStudentSubmit']);
     Route::get('lecturer/attendance/report',[ AttendanceController::class,'AttendanceReportLecturer']);
+
+
+    // Lecturers homework route start
+    Route::get('lecturer/homework/homework',[HomeworkController::class,'homeworkLecturer']);
+    Route::get('lecturer/homework/homework/add',[HomeworkController::class,'addLecturer']);
+    Route::post('lecturer/ajax_get_subject',[HomeworkController::class,'ajax_get_subject']);
+    Route::post('lecturer/homework/homework/add',[HomeworkController::class,'insertLecturer']);
+    Route::get('lecturer/homework/homework/edit/{id}',[HomeworkController::class,'editLecturer']);
+    Route::post('lecturer/homework/homework/edit/{id}',[HomeworkController::class,'updateLecturer']);
+    Route::get('lecturer/homework/homework/delete/{id}',[HomeworkController::class,'delete']);
+
+    // Lecturers homework route end
 
 
 });
