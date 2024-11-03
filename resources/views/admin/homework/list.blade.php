@@ -119,10 +119,10 @@
                     <td>{{ $value->created_by_name}}</td>
                     <td>
                       <a href="{{url('admin/homework/homework/edit/'.$value->id)}}" class="btn btn-primary" style="margin-bottom: 4px">Edit</a>
-                      <a href="{{url('admin/homework/homework/delete/'.$value->id)}}" class="btn btn-danger">Delete</a>
+                      <a href="{{url('admin/homework/homework/delete/'.$value->id)}}" class="btn btn-danger" style="margin-bottom: 4px">Delete</a>
+                      <a href="{{url('admin/homework/homework/submitted/'.$value->id)}}" class="btn btn-success">Submitted Homework</a>
                     </td>
                    </tr>
-
                    @empty
                    <tr>
                     <td colspan="100%">No Record Found</td>

@@ -66,15 +66,12 @@
                 </div>
                </form>
              </div>
-
-
-
           @include('_message')
           <div class="card" style="background-color:rgba(157, 204, 91, 0.554)">
             <div class="card-header">
               <h3 class="card-title">Homework List</h3>
             </div>
-            <div class="card-body p-0">
+            <div class="card-body p-0" style="overflow: auto">
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -128,7 +125,6 @@
               <div style="padding: 10px;float:right">
                 {!! $getRecord->appends(Illuminate\Support\Facades\Request::except('page'))->links()!!}
               </div>
-
           </div>
         </div>
       </div>

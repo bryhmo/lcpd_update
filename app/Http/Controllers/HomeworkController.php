@@ -116,6 +116,21 @@ class HomeworkController extends Controller
 
     }
 
+// this function is the function that return the submitted homework to the admin side
+    public function SubmittedHomework($homework_id){
+        $homework = HomeworkModel::getSingle($homework_id);
+        if(!empty($homework)){
+            $data['homework_id'] = $homework_id;
+            $data['getRecord'] = HomeworkSubmitModel::getRecord($homework_id);
+            $data['header_title'] = "Submitted Homework";
+            return view('admin.homework.submitted',$data);
+
+        }
+        else{
+            abort(404);
+        }
+
+    }
 
 
     // lecturers side of the  homework
@@ -206,6 +221,21 @@ class HomeworkController extends Controller
         $homework->save();
 
         return redirect('lecturer/homework/homework')->with('success','Homework Updated successfully');
+
+    }
+
+    public function  SubmittedHomeworkLecturer($homework_id){
+        $homework = HomeworkModel::getSingle($homework_id);
+        if(!empty($homework)){
+            $data['homework_id'] = $homework_id;
+            $data['getRecord'] = HomeworkSubmitModel::getRecord($homework_id);
+            $data['header_title'] = "Submitted Homework";
+            return view('lecturer.homework.submitted',$data);
+
+        }
+        else{
+            abort(404);
+        }
 
     }
 
