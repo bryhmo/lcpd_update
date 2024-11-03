@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ClassModel;
+use App\Models\HomeworkSubmitModel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\HomeworkModel;
@@ -24,6 +25,7 @@ class HomeworkController extends Controller
         return view('admin.homework.add',$data);
 
     }
+
 
     public function insert(Request $request){
         // dd($request->all());
@@ -206,4 +208,54 @@ class HomeworkController extends Controller
         return redirect('lecturer/homework/homework')->with('success','Homework Updated successfully');
 
     }
+
+
+    /* THIS IS THE STUDENT PART OF THE HOMEWORK MODULE */
+
+
+    public function homeworkStudent(){
+        $data['getRecord'] = HomeworkModel::getRecordStudent(Auth::user()->class_id,Auth::user()->id);
+        $data['header_title'] = "My Homework";
+        return view('student.homework.list',$data);
+    }
+
+    public function SubmitHomework($homework_id){
+        $data['getRecord'] = HomeworkModel::getSingle($homework_id);
+        $data['header_title'] = "Submit My Homework";
+        return view('student.homework.submit',$data);
+    }
+
+
+    public function SubmitHomeworkInsert($homework_id, Request $request){
+        $homework = new HomeworkSubmitModel;
+        $homework->homework_id = $homework_id;
+        $homework->student_id = Auth::user()->id;
+        $homework->description = trim($request->description)  ;
+
+        if(!empty($request->file('document_file')))
+        {
+            $ext =  $request->file('document_file')->getClientOriginalExtension();
+            $file = $request->file('document_file');
+            $randomstr = Str::random(20);
+            $filename = strtolower($randomstr) .'.'.$ext;
+            $file->move('upload/homework/',$filename);
+
+            $homework->document_file = $filename;
+        }
+
+
+        $homework->save();
+
+        return redirect('student/my_homework')->with('success','Homework Submitted successfully');
+
+    }
+
+
+// this is the function that is incharge of the homework that is submitted by the student
+    public function homeworkStudentSubmitted(){
+        $data['getRecord'] = HomeworkSubmitModel::getRecordStudent(Auth::user()->id);
+        $data['header_title'] = "My Submitted Homework";
+        return view('student.homework.submittedlist',$data);
+    }
+
 }

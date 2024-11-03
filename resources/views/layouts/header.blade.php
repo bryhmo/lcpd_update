@@ -654,6 +654,25 @@
           </li>
 
           <li class="nav-item">
+            <a href="{{url('student/my_homework')}}" class="nav-link @if(Request::segment(2)=='my_homework') active @endif">
+              <i class="nav-icon far fa-user"></i>
+              <p>
+               My HomeWork
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{url('student/my_submitted_homework')}}" class="nav-link @if(Request::segment(2)=='my_submitted_homework') active @endif">
+              <i class="nav-icon far fa-user"></i>
+              <p>
+               My Submitted HomeWork
+              </p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
             <a href="{{url('student/change_password')}}" class="nav-link @if(Request::segment(2)=='change_password') active @endif">
               <i class="nav-icon far fa-user"></i>
               <p>

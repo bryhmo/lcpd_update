@@ -341,10 +341,19 @@ Route::group([ 'middleware' =>'student'], function() {
     // stripe url
     Route::get('student/stripe/payment-error',[FeesCollectionController::class,'PaymentError']);
     Route::get('student/stripe/payment-success',[FeesCollectionController::class,'PaymentSuccessStripe']);
-});
 
+
+    //homwork url
+    Route::get('student/my_homework',[HomeworkController::class,'homeworkStudent']);
+    Route::get('student/my_homework/submit_homework/{id}',[HomeworkController::class,'SubmitHomework']);
+    Route::post('student/my_homework/submit_homework/{id}',[HomeworkController::class,'SubmitHomeworkInsert']);
+    Route::get('student/my_submitted_homework',[HomeworkController::class,'homeworkStudentSubmitted']);
+
+});
 
 
 Route::get('hash',function(){
     echo bcrypt('123456789');
 });
+
+
