@@ -13,6 +13,12 @@ use App\Models\AssignClassLecturerModel;
 
 class HomeworkController extends Controller
 {
+    public function homework_report(){
+        $data['getRecord'] = HomeworkSubmitModel::getHomeworkReport();
+        $data['header_title'] = "Homework Report";
+        return view('admin.homework.report',$data);
+
+    }
     public function homework(){
         $data['getRecord'] = HomeworkModel::getRecord();
         $data['header_title'] = "Homework";

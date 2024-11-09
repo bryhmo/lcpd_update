@@ -219,6 +219,9 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::get('admin/homework/homework/delete/{id}',[HomeworkController::class,'delete']);
     Route::get('admin/homework/homework/submitted/{id}',[HomeworkController::class,'SubmittedHomework']);
 
+    Route::get('admin/homework/homework_report',[HomeworkController::class,'homework_report']);
+
+
     // admin home work route end
 
     Route::prefix('admin')->group(function () {

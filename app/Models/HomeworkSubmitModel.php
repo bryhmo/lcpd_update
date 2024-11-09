@@ -93,6 +93,23 @@ class HomeworkSubmitModel extends Model
     return $return;
    }
 
+    // this function is the function that is reporting the homework that has been submitted by the all the students irrespective of there department and there course of study in the lcpd
+   static public function getHomeworkReport(){
+    $return = HomeworkSubmitModel::select('homework_submit.*','class.name as class_name','subject.name as subject_name')
+                    ->join('homework','homework.id','=','homework_submit.homework_id')
+                    ->join('class','class.id','=','homework.class_id')
+                    ->join('subject','subject.id','=','homework.subject_id')
+                    ->where('homework_submit.student_id', '=','student_id');
+
+
+         $return = $return->orderBy('homework_submit.id','desc')
+                    ->paginate(20);
+    return $return;
+   }
+
+
+
+
    public function getDocument(){
     if(!empty($this->document_file && file_exists(public_path().'/upload/homework/'.$this->document_file))){
       return url('upload/homework/'.$this->document_file);
