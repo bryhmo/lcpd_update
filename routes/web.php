@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseMaterialController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -218,11 +219,27 @@ Route::group([ 'middleware' =>'admin'], function() {
     Route::post('admin/homework/homework/edit/{id}',[HomeworkController::class,'update']);
     Route::get('admin/homework/homework/delete/{id}',[HomeworkController::class,'delete']);
     Route::get('admin/homework/homework/submitted/{id}',[HomeworkController::class,'SubmittedHomework']);
-
     Route::get('admin/homework/homework_report',[HomeworkController::class,'homework_report']);
-
-
     // admin home work route end
+
+
+
+    //course material route started
+    Route::get('admin/course_material/course_material',[CourseMaterialController::class,'CourseMaterial']);
+    Route::get('admin/course_material/course_material/add',[CourseMaterialController::class,'add']);
+    Route::post('admin/ajax_get_subject',[CourseMaterialController::class,'ajax_get_subject']);
+    Route::post('admin/course_material/course_material/add',[CourseMaterialController::class,'insert']);
+    Route::get('admin/course_material/course_material/edit/{id}',[CourseMaterialController::class,'edit']);
+    Route::post('admin/course_material/course_material/edit/{id}',[CourseMaterialController::class,'update']);
+    Route::get('admin/course_material/course_material/delete/{id}',[CourseMaterialController::class,'delete']);
+
+
+
+
+
+
+
+    //course material route ended
 
     Route::prefix('admin')->group(function () {
         Route::get('users', [NewUserController::class, 'index'])->name('users.index');
@@ -271,8 +288,6 @@ Route::group([ 'middleware' =>'lecturer'], function() {
     Route::get('lecturer/my_calendar',[CalendarController::class,'MyCalendarLecturer']);
 
 
-    //student course
-    Route::get('lecturer/student_course_material',[FeesCollectionController::class,'student_course_material']);
 
 
     // marks register urls for lecturers
@@ -301,6 +316,16 @@ Route::group([ 'middleware' =>'lecturer'], function() {
 
 
     // Lecturers homework route end
+
+    /* ***    lecturers course materials route started*/
+    Route::get('lecturer/course_material/course_material',[CourseMaterialController::class,'CourseMaterialLecturer']);
+    Route::get('lecturer/course_material/course_material/add',[CourseMaterialController::class,'addLecturer']);
+    Route::post('lecturer/ajax_get_subject',[CourseMaterialController::class,'ajax_get_subject']);
+    Route::post('lecturer/course_material/course_material/add',[CourseMaterialController::class,'insertLecturer']);
+    Route::get('lecturer/course_material/course_material/edit/{id}',[CourseMaterialController::class,'editLecturer']);
+    Route::post('lecturer/course_material/course_material/edit/{id}',[CourseMaterialController::class,'updateLecturer']);
+    Route::get('lecturer/course_material/course_material/delete/{id}',[CourseMaterialController::class,'delete']);
+
 
 
 });

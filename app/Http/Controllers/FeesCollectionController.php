@@ -90,28 +90,8 @@ class FeesCollectionController extends Controller
     }
 
     //student side
-    public function StudentCourses(Request $request){
-        $student_id = Auth::user()->id;
-        $data['getFees'] = StudentAddFeesModel::getFees($student_id);
-        // dd($data['getFees']);
-        $getStudent =User::getSingleClass($student_id);
-        $data['getStudent'] = $getStudent;
 
-        $data['header_title'] = "Course Materials";
-        $data['paid_amount'] = StudentAddFeesModel::getPaidAmount(Auth::user()->id,Auth::user()->class_id);
-        return view('student.my_course_materials' , $data);
-    }
-    public function student_course_material(Request $request){
-        $student_id = Auth::user()->id;
-        $data['getFees'] = StudentAddFeesModel::getFees($student_id);
-        // dd($data['getFees']);
-        $getStudent =User::getSingleClass($student_id);
-        $data['getStudent'] = $getStudent;
 
-        $data['header_title'] = "Student Course Materials";
-        $data['paid_amount'] = StudentAddFeesModel::getPaidAmount(Auth::user()->id,Auth::user()->class_id);
-        return view('lecturer.student_course_material' , $data);
-    }
     public function CollectFeesStudent(Request $request){
         $student_id = Auth::user()->id;
         $data['getFees'] = StudentAddFeesModel::getFees($student_id);

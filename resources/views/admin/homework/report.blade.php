@@ -28,6 +28,22 @@
                     <div class="row">
 
                       <div class="form-group col-md-3">
+                        <label>Student First Name</label>
+                        <input type="text" class="form-control" placeholder="Student First Name" name="first_name" value="{{ Request::get('first_name')}}" >
+                      </div>
+
+
+                      <div class="form-group col-md-3">
+                        <label>Student Last Name</label>
+                        <input type="text" class="form-control" placeholder=" Student Last Name" name="last_name" value="{{ Request::get('last_name')}}" >
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>Student Admission Number </label>
+                        <input type="text" class="form-control" placeholder=" Student Admission Number" name="admission_number" value="{{ Request::get('admission_number')}}" >
+                      </div>
+
+
+                      <div class="form-group col-md-3">
                         <label>Program</label>
                         <input type="text" class="form-control" placeholder="Program Name" name="class_name" value="{{ Request::get('class_name')}}" >
                       </div>
@@ -80,7 +96,7 @@
 
 
           @include('_message')
-          <div class="card" style="background-color:rgba(157, 204, 91, 0.554)">
+          <div class="card" style="background-color:rgba(157, 204, 91, 0.554); overflow:auto" >
             <div class="card-header">
               <h3 class="card-title">Homework Report List</h3>
             </div>
@@ -90,7 +106,8 @@
                   <tr>
                     <th>#</th>
                    <th>Student Name</th>
-                    <th>Class</th>
+                    <th>Program</th>
+                    <th>Matric Number</th>
                     <th>Subject</th>
                     <th>Homework Date</th>
                     <th>Submission Date</th>
@@ -102,12 +119,49 @@
                     <th>Submitted Created Date</th>
                   </tr>
                 </thead>
+                <tbody>
+                    @forelse ($getRecord as $value)
+                    <tr>
+                     <td>{{$value->id}}</td>
+                     <td>{{$value->first_name}} {{$value->last_name}}</td>
+                     <td>{{$value->class_name}}</td>
+                     <td>{{$value->admission_number}}</td>
+                     <td>{{$value->subject_name}}</td>
+                     <td>{{ date('d:m:Y',strtotime($value->getHomework->homework_date))}}</td>
+                     <td>{{ date('d:m:Y',strtotime($value->getHomework->submission_date))}}</td>
+                     <td>
+                       @if(!empty($value->getHomework->getDocument()))
+                       <a href="{{url($value->getHomework->getDocument())}}" target="_blank" class="btn btn-primary" style="margin-bottom:4px">Preview</a>
+                       <a href="{{url($value->getHomework->getDocument())}}" download="" class="btn btn-secondary">Download</a>
+                         @endif
+                     </td>
+                    <td>{!! $value->getHomework->description!!}</td>
 
+                     <td>{{ date('d:m:Y',strtotime($value->getHomework->created_at))}}</td>
+                     <td>
+                       @if(!empty($value->getDocument()))
+                       <a href="{{url($value->getDocument())}}" target="_blank" class="btn btn-primary" style="margin-bottom:4px">Preview</a>
+                       <a href="{{url($value->getDocument())}}" download="" class="btn btn-secondary">Download</a>
+                         @endif
+                     </td>
+                    <td>{!! $value->description!!}</td>
+
+                     <td>{{ date('d:m:Y',strtotime($value->created_at))}}</td>
+                    </tr>
+
+                    @empty
+                    <tr>
+                     <td colspan="100%" style="font-size: 1.5rem;color:green">No Record Found</td>
+                    </tr>
+                    @endforelse
+
+                </tbody>
 
 
                 </table>
 
               <div style="padding: 10px;float:right">
+                {!! $getRecord->appends(Illuminate\Support\Facades\Request::except('page'))->links()!!}
 
               </div>
 

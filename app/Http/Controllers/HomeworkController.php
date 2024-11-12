@@ -230,6 +230,8 @@ class HomeworkController extends Controller
 
     }
 
+
+
     public function  SubmittedHomeworkLecturer($homework_id){
         $homework = HomeworkModel::getSingle($homework_id);
         if(!empty($homework)){

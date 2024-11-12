@@ -358,6 +358,29 @@
           </ul>
         </li>
 
+        <li class="nav-item  @if(Request::segment(2)=='course_material')  menu-is-opening menu-open @endif">
+          <a href="#" class="nav-link   @if(Request::segment(2)=='course_material' ) active @endif">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+                Course Material
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{url('admin/course_material/course_material')}}" class="nav-link  @if(Request::segment(3)=='course_material') active @endif ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Course Material</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{url('admin/course_material/course_material_report')}}" class="nav-link  @if(Request::segment(3)=='course_material_report') active @endif ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Course Material Report</p>
+              </a>
+            </li>
+          </ul>
+        </li>
         <li class="nav-item  @if(Request::segment(2)=='homework')  menu-is-opening menu-open @endif">
           <a href="#" class="nav-link   @if(Request::segment(2)=='homework' ) active @endif">
             <i class="nav-icon fas fa-table"></i>
@@ -436,10 +459,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{url('lecturer/student_course_material')}}" class="nav-link @if(Request::segment(2)=='student_course_material') active @endif">
+            <a href="{{url('lecturer/course_material/course_material')}}" class="nav-link @if(Request::segment(2)=='course_material') active @endif">
               <i class="nav-icon far fa-user"></i>
               <p>
-                Student Course Material
+                Course Material
               </p>
             </a>
           </li>
