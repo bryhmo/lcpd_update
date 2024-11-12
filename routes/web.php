@@ -359,7 +359,7 @@ Route::group([ 'middleware' =>'student'], function() {
     Route::get('/student/my_notice_board',[CommunicateController::class,'MyNoticeBoardStudent']);
 
 
-    Route::get('student/course_material',[FeesCollectionController::class,'StudentCourses']);
+
     Route::get('student/fees_collection',[FeesCollectionController::class,'CollectFeesStudent']);
     Route::get('student/fees_receipts',[FeesCollectionController::class,'FeesReceipts']);
 
@@ -379,6 +379,13 @@ Route::group([ 'middleware' =>'student'], function() {
     Route::get('student/my_homework/submit_homework/{id}',[HomeworkController::class,'SubmitHomework']);
     Route::post('student/my_homework/submit_homework/{id}',[HomeworkController::class,'SubmitHomeworkInsert']);
     Route::get('student/my_submitted_homework',[HomeworkController::class,'homeworkStudentSubmitted']);
+
+
+
+    //course material
+    Route::get('student/my_course_material',[CourseMaterialController::class,'CourseMaterialStudent']);
+
+
 
 });
 

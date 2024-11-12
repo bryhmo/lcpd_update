@@ -592,7 +592,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{url('student/course_material')}}" class="nav-link @if(Request::segment(2)=='course_material') active @endif">
+            <a href="{{url('student/my_course_material')}}" class="nav-link @if(Request::segment(2)=='my_course_material') active @endif">
               <i class="nav-icon far fa-user"></i>
               <p>
                 Course Materials

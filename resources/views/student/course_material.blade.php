@@ -8,11 +8,9 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 style="color: red">Course Material</h1>
+          <h1 style="color: red">My Course Materials</h1>
         </div>
-        <div class="col-sm-6" style="text-align: right;">
-          <a href="{{url('lecturer/course_material/course_material/add')}}" class="btn btn-primary">Add New Course Material</a>
-        </div>
+
       </div>
     </div>
   </section>
@@ -30,36 +28,32 @@
                    @csrf
 
                     <div class="row">
-                      <div class="form-group col-md-3">
-                        <label>Program</label>
-                        <input type="text" class="form-control" placeholder="Program Name" name="class_name" value="{{ Request::get('class_name')}}" >
-                      </div>
 
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-2">
                         <label>Subject</label>
                         <input type="text" class="form-control" placeholder="Subject Name" name="subject_name" value="{{ Request::get('subject_name')}}" >
                       </div>
 
 
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-2">
                         <label>Subject Code</label>
                         <input type="text" class="form-control" placeholder="Subject Code" name="subject_code" value="{{ Request::get('subject_code')}}" >
                       </div>
 
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-2">
                         <label>From Created Date</label>
                         <input type="date" class="form-control"  name="from_created_date" value="{{ Request::get('from_created_date')}}">
                       </div>
 
 
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-2">
                         <label>To Created Date</label>
                         <input type="date" class="form-control"  name="to_created_date" value="{{ Request::get('to_created_date')}}">
                       </div>
 
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-2">
                         <button type="submit" class="btn btn-primary" style="margin-top: 33px">Search</button>
-                        <a href="{{url('lecturer/course_material/course_material')}}" class="btn btn-primary" style="margin-top: 33px">Reset</a>
+                        <a href="{{url('student/my_course_material')}}" class="btn btn-primary" style="margin-top: 33px">Reset</a>
                       </div>
                     </div>
                 </div>
@@ -68,7 +62,7 @@
           @include('_message')
           <div class="card" style="background-color:rgba(157, 204, 91, 0.554)">
             <div class="card-header">
-              <h3 class="card-title">Course Material List</h3>
+              <h3 class="card-title">My Course Material List</h3>
             </div>
             <div class="card-body p-0">
               <table class="table table-striped">
@@ -82,7 +76,6 @@
                     <th>Description</th>
                     <th>Created Date</th>
                     <th>Created By</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
 
@@ -102,10 +95,7 @@
                      <td>{!! $value->description !!}</td>
                      <td>{{ date('d:m:Y',strtotime($value->created_at))}}</td>
                      <td>{{ $value->created_by_name}}</td>
-                     <td>
-                       <a href="{{url('lecturer/course_material/course_material/edit/'.$value->id)}}" class="btn btn-primary" style="margin-bottom: 4px">Edit</a>
-                       <a href="{{url('lecturer/course_material/course_material/delete/'.$value->id)}}" class="btn btn-danger" style="margin-bottom: 4px">Delete</a>
-                     </td>
+
                     </tr>
                     @empty
                     <tr>

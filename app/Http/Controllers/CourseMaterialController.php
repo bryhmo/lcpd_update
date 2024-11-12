@@ -208,5 +208,16 @@ public function updateLecturer(Request $request ,$id)
 
 
 
+//student logic of the course material module
+public function CourseMaterialStudent(){
+    $data['getRecord'] = CourseMaterialModel::getRecordStudent(Auth::user()->class_id);
+    $data['header_title'] = "My Course Material";
+    return view('student.course_material',$data);
+}
+
+
+
+
+
 
 }
